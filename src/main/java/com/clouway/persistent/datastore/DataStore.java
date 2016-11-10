@@ -32,6 +32,19 @@ public class DataStore {
     }
   }
 
+  public ResultSet execute(String query, Object... objects) throws SQLException {
+    Connection connection = provider.get();
+    ResultSet set = null;
+    try {
+      PreparedStatement statement = connection.prepareStatement(query);
+      fillStatement(statement, objects);
+      set = statement.executeQuery();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return set;
+  }
+
   public <T> List<T> fetchRows(String query, RowFetcher<T> rowFetcher) {
     List<T> list = Lists.newArrayList();
     Connection connection = provider.get();

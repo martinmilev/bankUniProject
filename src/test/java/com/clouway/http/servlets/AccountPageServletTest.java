@@ -2,11 +2,7 @@ package com.clouway.http.servlets;
 
 import com.clouway.FakeHttpServletRequest;
 import com.clouway.FakeHttpServletResponse;
-import com.clouway.core.Account;
-import com.clouway.core.AccountRepository;
-import com.clouway.core.ServletPageRenderer;
-import com.clouway.core.Session;
-import com.clouway.core.SessionsRepository;
+import com.clouway.core.*;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;
@@ -31,9 +27,10 @@ public class AccountPageServletTest {
 
   private AccountRepository repo = context.mock(AccountRepository.class);
   private SessionsRepository sessions = context.mock(SessionsRepository.class);
+  private DailyActivityRepository activityRepository = context.mock(DailyActivityRepository.class);
   private ServletPageRenderer servletResponseWriter = context.mock(ServletPageRenderer.class);
 
-  private AccountPageServlet servlet = new AccountPageServlet(repo, sessions, servletResponseWriter);
+  private AccountPageServlet servlet = new AccountPageServlet(repo, activityRepository, sessions, servletResponseWriter);
 
   @Test
   public void happyPath() throws Exception {
@@ -45,11 +42,20 @@ public class AccountPageServletTest {
       put("name", "John");
       put("balance", 0.0);
       put("count", 1);
+      put("deposits", 8);
+      put("withdraws", 5);
     }};
 
     context.checking(new Expectations() {{
       oneOf(sessions).findBySID("John");
       will(returnValue(Optional.of(new Session("1", "John", new Date()))));
+
+      oneOf(activityRepository).dailyActivity();
+      will(returnValue(new HashMap<String, Integer>() {{
+        put("Deposit", 8);
+        put("Withdraw", 5);
+      }}));
+
 
       oneOf(repo).getByName("John");
       will(returnValue(Optional.of(new Account("John", "", 0.0))));
