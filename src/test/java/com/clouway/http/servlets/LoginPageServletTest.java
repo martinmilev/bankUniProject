@@ -51,14 +51,14 @@ public class LoginPageServletTest {
     FakeHttpServletRequest request = createRequest(
             ImmutableMap.of(
                     "name", "John",
-                    "password", "pwd"
+                    "password", "password"
             )
     );
     FakeHttpServletResponse response = createResponse();
 
     context.checking(new Expectations() {{
       oneOf(repo).getByName("John");
-      will(returnValue(Optional.of(new Account("John", "pwd", 0))));
+      will(returnValue(Optional.of(new Account("John", "password", 0))));
     }});
 
     servlet.doPost(request, response);

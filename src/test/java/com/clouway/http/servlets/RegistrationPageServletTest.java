@@ -5,15 +5,12 @@ import com.clouway.FakeHttpServletResponse;
 import com.clouway.core.Account;
 import com.clouway.core.AccountRepository;
 import com.clouway.core.ServletPageRenderer;
-import com.clouway.core.Validator;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -30,25 +27,18 @@ public class RegistrationPageServletTest {
 
   private FakeHttpServletRequest request = new FakeHttpServletRequest();
   private FakeHttpServletResponse response = new FakeHttpServletResponse();
-  private ByteArrayOutputStream stream;
   private RegistrationPageServlet servlet;
-  private PrintWriter writer;
 
-  private Validator validator = context.mock(Validator.class);
   private AccountRepository repo = context.mock(AccountRepository.class);
   private ServletPageRenderer servletResponseWriter = context.mock(ServletPageRenderer.class);
 
   @Before
   public void setUp() throws Exception {
     servlet = new RegistrationPageServlet(repo, servletResponseWriter);
-    stream = new ByteArrayOutputStream();
-    writer = new PrintWriter(stream);
   }
 
   @Test
-  public void happyPath() throws Exception {
-    response.setWriter(writer);
-
+  public void showRegistrationPage() throws Exception {
     context.checking(new Expectations() {{
       oneOf(servletResponseWriter).renderPage("register.html", Collections.singletonMap("error", ""), response);
     }});
@@ -59,7 +49,6 @@ public class RegistrationPageServletTest {
   @Test
   public void takenUsername() throws Exception {
     request.setParameter("name", "John");
-    response.setWriter(writer);
 
     context.checking(new Expectations() {{
       oneOf(repo).getByName("John");
