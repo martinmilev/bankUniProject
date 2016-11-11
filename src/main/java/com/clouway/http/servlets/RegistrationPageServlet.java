@@ -56,7 +56,7 @@ public class RegistrationPageServlet extends HttpServlet {
             nameValidator.check(name) &&
             pswdValidator.check(pswd)) {
 
-      Account account = new Account(name, pswd, 0);
+      Account account = new Account(name, pswd, 0.0);
       repository.register(account);
 
       resp.sendRedirect("/login");

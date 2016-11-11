@@ -6,9 +6,9 @@ package com.clouway.core;
 public class Account {
   public final String name;
   public final String password;
-  public final Integer amount;
+  public final Double amount;
 
-  public Account(String name, String password, Integer amount) {
+  public Account(String name, String password, Double amount) {
     this.name = name;
     this.password = password;
     this.amount = amount;

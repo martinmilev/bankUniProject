@@ -3,6 +3,7 @@ package com.clouway.persistent.datastore;
 import com.clouway.core.Provider;
 import com.google.common.collect.Lists;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,6 +62,55 @@ public class DataStore {
       } catch (SQLException e) {
         e.printStackTrace();
       }
+    }
+  }
+
+  public void runInTransaction(TransactionCall callback) {
+    Connection connection = provider.get();
+    try {
+      connection.setAutoCommit(false);
+
+      callback.execute(connection);
+
+      connection.commit();
+    } catch (SQLException e) {
+      try {
+        if (connection != null) {
+          connection.rollback();
+        }
+      } catch (SQLException e1) {
+        e1.printStackTrace();
+      }
+    } finally {
+      try {
+        connection.setAutoCommit(true);
+        close(connection);
+      } catch (SQLException e) {
+        throw new IllegalStateException("Connection cannot be moved to it's original state.", e);
+      }
+    }
+  }
+
+  public BigDecimal fetchOne(Connection connection, String query, Object... params) {
+    BigDecimal decimal = null;
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+      fillStatement(statement, params);
+      ResultSet set = statement.executeQuery();
+      if (set.next()) {
+        decimal = BigDecimal.valueOf(set.getDouble(1));
+      }
+    } catch (SQLException e) {
+      throw new IllegalStateException("Connection to the database wasn't established", e);
+    }
+    return decimal;
+  }
+
+  public void executeUpdate(Connection connection, String query, Object... params) {
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+      fillStatement(statement, params);
+      statement.execute();
+    } catch (SQLException e) {
+      throw new IllegalStateException("Connection to the database wasn't established", e);
     }
   }
 }

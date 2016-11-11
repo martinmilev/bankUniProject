@@ -69,7 +69,7 @@ public class LoginPageServletTest {
     context.checking(new Expectations() {{
 
       oneOf(repo).getByName("John");
-      will(returnValue(Optional.of(new Account("John", "password", 0))));
+      will(returnValue(Optional.of(new Account("John", "password", 0.0))));
 
       oneOf(sessions).save(new Session("id", "John", date));
 
@@ -117,7 +117,7 @@ public class LoginPageServletTest {
 
     context.checking(new Expectations() {{
       oneOf(repo).getByName("John");
-      will(returnValue(Optional.of(new Account("John", "wrong", 0))));
+      will(returnValue(Optional.of(new Account("John", "wrong", 0.0))));
 
       oneOf(servletResponseWriter).renderPage("login.html", Collections.singletonMap("error", "Wrong password"), response);
     }});

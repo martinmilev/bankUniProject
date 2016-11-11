@@ -52,7 +52,7 @@ public class RegistrationPageServletTest {
 
     context.checking(new Expectations() {{
       oneOf(repo).getByName("John");
-      will(returnValue(Optional.of(new Account("John", "pwd", 0))));
+      will(returnValue(Optional.of(new Account("John", "pwd", 0.0))));
 
       oneOf(servletResponseWriter).renderPage("register.html", Collections.singletonMap("error", "Username is taken"), response);
     }});
@@ -69,7 +69,7 @@ public class RegistrationPageServletTest {
       oneOf(repo).getByName("John");
       will(returnValue(Optional.empty()));
 
-      oneOf(repo).register(new Account("John", "password", 0));
+      oneOf(repo).register(new Account("John", "password", 0.0));
     }});
 
     servlet.doPost(request, response);

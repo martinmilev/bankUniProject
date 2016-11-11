@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * @author Martin Milev <martinmariusmilev@gmail.com>
  */
-public class HomePageServletTest {
+public class AccountPageServletTest {
 
   @Rule
   public JUnitRuleMockery context = new JUnitRuleMockery();
@@ -43,7 +43,7 @@ public class HomePageServletTest {
 
     Map<String, Object> params = new HashMap<String, Object>() {{
       put("name", "John");
-      put("balance", 0);
+      put("balance", 0.0);
       put("count", 1);
     }};
 
@@ -52,7 +52,7 @@ public class HomePageServletTest {
       will(returnValue(Optional.of(new Session("1", "John", new Date()))));
 
       oneOf(repo).getByName("John");
-      will(returnValue(Optional.of(new Account("John", "", 0))));
+      will(returnValue(Optional.of(new Account("John", "", 0.0))));
 
       oneOf(sessions).countSessions();
       will(returnValue(1));

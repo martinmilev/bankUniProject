@@ -27,12 +27,36 @@ public class PersistentAccountRepositoryTest {
 
   @Test
   public void happyPath() throws Exception {
-    Account account = new Account("John", "123", 123);
+    Account account = new Account("John", "123", 123.0);
 
     repo.register(account);
     Account actual = repo.getByName("John").get();
 
     assertThat(actual, is(account));
+  }
+
+  @Test
+  public void deposit() throws Exception {
+    Account account = new Account("John", "123", 123.0);
+    Account updated = new Account("John", "123", 500.0);
+
+    repo.register(account);
+    repo.deposit("John", 377.0);
+    Account actual = repo.getByName("John").get();
+
+    assertThat(actual, is(updated));
+  }
+
+  @Test
+  public void withdraw() throws Exception {
+    Account account = new Account("John", "123", 123.0);
+    Account updated = new Account("John", "123", 100.0);
+
+    repo.register(account);
+    repo.withdraw("John", 23.0);
+    Account actual = repo.getByName("John").get();
+
+    assertThat(actual, is(updated));
   }
 
   @Test

@@ -8,6 +8,10 @@ import java.util.Optional;
 public interface AccountRepository {
   void register(Account account);
 
+  void deposit(String name, Double balance);
+
+  void withdraw(String name, Double balance);
+
   Optional<Account> getByName(String name);
 }
 

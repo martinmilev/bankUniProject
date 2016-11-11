@@ -30,6 +30,11 @@
     <servlet-class>com.clouway.http.servlets.AccountPageServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>TransactionPageServlet</servlet-name>
+    <servlet-class>com.clouway.http.servlets.TransactionPageServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>registrationPageServlet</servlet-name>
     <url-pattern>/register</url-pattern>
@@ -42,7 +47,12 @@
 
   <servlet-mapping>
     <servlet-name>accountPageServlet</servlet-name>
-    <url-pattern>/account</url-pattern>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>TransactionPageServlet</servlet-name>
+    <url-pattern>/transaction</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
