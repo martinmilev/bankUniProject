@@ -31,8 +31,13 @@
   </servlet>
 
   <servlet>
-    <servlet-name>TransactionPageServlet</servlet-name>
+    <servlet-name>transactionPageServlet</servlet-name>
     <servlet-class>com.clouway.http.servlets.TransactionPageServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>transactionHistoryPageServlet</servlet-name>
+    <servlet-class>com.clouway.http.servlets.TransactionHistoryPageServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -53,6 +58,11 @@
   <servlet-mapping>
     <servlet-name>TransactionPageServlet</servlet-name>
     <url-pattern>/transaction</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>transactionHistoryPageServlet</servlet-name>
+    <url-pattern>/history</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
