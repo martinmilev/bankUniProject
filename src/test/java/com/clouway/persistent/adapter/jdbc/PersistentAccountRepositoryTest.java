@@ -1,7 +1,7 @@
 package com.clouway.persistent.adapter.jdbc;
 
-import com.clouway.persistent.DatastoreCleaner;
 import com.clouway.core.Account;
+import com.clouway.persistent.DatastoreCleaner;
 import com.clouway.persistent.datastore.DataStore;
 import org.junit.Before;
 import org.junit.Test;

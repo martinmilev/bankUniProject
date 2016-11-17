@@ -33,36 +33,34 @@ public class SecurityFilterTest {
   }
 
   @Test
+  public void happyPath() throws Exception {
+    SecurityFilter filter = new SecurityFilter();
+    request.addCookie(new Cookie("SID", "123"));
+    request.setRequestURI("/account");
+
+    context.checking(new Expectations() {{
+      oneOf(chain).doFilter(request, response);
+    }});
+
+    filter.doFilter(request, response, chain);
+  }
+
+  @Test
+  public void redirectToAccount() throws Exception {
+    SecurityFilter filter = new SecurityFilter();
+    request.addCookie(new Cookie("SID", "123"));
+    request.setRequestURI("/login");
+
+    filter.doFilter(request, response, chain);
+
+    assertThat(response.getRedirect(), is("account"));
+  }
+
+  @Test
   public void unauthorisedRequest() throws Exception {
     SecurityFilter filter = new SecurityFilter();
     filter.doFilter(request, response, chain);
 
     assertThat(response.getRedirect(), is("login"));
-  }
-
-  @Test
-  public void triesToOpenLogin() throws Exception {
-    SecurityFilter filter = new SecurityFilter();
-    request.addCookie(new Cookie("SID", "123"));
-    request.setRequestURI("/login");
-
-    context.checking(new Expectations() {{
-      oneOf(chain).doFilter(request, response);
-    }});
-
-    filter.doFilter(request, response, chain);
-  }
-
-  @Test
-  public void triesToOpenSecuredPage() throws Exception {
-    SecurityFilter filter = new SecurityFilter();
-    request.addCookie(new Cookie("SID", "123"));
-    request.setRequestURI("/");
-
-    context.checking(new Expectations() {{
-      oneOf(chain).doFilter(request, response);
-    }});
-
-    filter.doFilter(request, response, chain);
   }
 }

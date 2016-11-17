@@ -7,7 +7,6 @@ import com.clouway.persistent.datastore.DataStore;
  * @author Miroslav Genov (miroslav.genov@clouway.com)
  */
 public class DatastoreCleaner {
-
   private final ConnectionProvider provider = new ConnectionProvider();
   private final DataStore dataStore = new DataStore(provider);
   private final String[] table;

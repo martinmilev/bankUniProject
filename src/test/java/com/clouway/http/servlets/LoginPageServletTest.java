@@ -4,7 +4,11 @@ import com.clouway.FakeHttpServletRequest;
 import com.clouway.FakeHttpServletResponse;
 import com.clouway.core.Account;
 import com.clouway.core.AccountRepository;
+import com.clouway.core.MyClock;
+import com.clouway.core.Provider;
 import com.clouway.core.ServletPageRenderer;
+import com.clouway.core.Session;
+import com.clouway.core.SessionsRepository;
 import com.google.common.collect.ImmutableMap;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -15,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,10 +34,13 @@ public class LoginPageServletTest {
   @Rule
   public JUnitRuleMockery context = new JUnitRuleMockery();
 
+  private MyClock clock = context.mock(MyClock.class);
   private AccountRepository repo = context.mock(AccountRepository.class);
+  private SessionsRepository sessions = context.mock(SessionsRepository.class);
   private ServletPageRenderer servletResponseWriter = context.mock(ServletPageRenderer.class);
+  private Provider<String> uuid = context.mock(Provider.class);
 
-  private LoginPageServlet servlet = new LoginPageServlet(repo, servletResponseWriter);
+  private LoginPageServlet servlet = new LoginPageServlet(repo, sessions, servletResponseWriter, clock, uuid);
 
   @Test
   public void happyPath() throws Exception {
@@ -48,6 +56,8 @@ public class LoginPageServletTest {
 
   @Test
   public void login() throws Exception {
+    final Date date = new Date();
+
     FakeHttpServletRequest request = createRequest(
             ImmutableMap.of(
                     "name", "John",
@@ -57,8 +67,18 @@ public class LoginPageServletTest {
     FakeHttpServletResponse response = createResponse();
 
     context.checking(new Expectations() {{
+
       oneOf(repo).getByName("John");
       will(returnValue(Optional.of(new Account("John", "password", 0))));
+
+      oneOf(sessions).save(new Session("id", "John", date));
+
+      oneOf(uuid).get();
+      will(returnValue("id"));
+
+      oneOf(clock).getDate();
+      will(returnValue(date));
+
     }});
 
     servlet.doPost(request, response);
@@ -103,26 +123,6 @@ public class LoginPageServletTest {
     }});
 
     servlet.doPost(request, response);
-  }
-
-  @Test
-  public void anotherWrongPassword() throws Exception {
-    FakeHttpServletRequest request = createRequest(
-            ImmutableMap.of(
-                    "name", "John",
-                    "password", "123123"
-            )
-    );
-    FakeHttpServletResponse response = createResponse();
-
-    context.checking(new Expectations() {{
-      oneOf(repo).getByName("John");
-      will(returnValue(Optional.of(new Account("John", "123123", 0))));
-
-    }});
-
-    servlet.doPost(request, response);
-    assertThat(response.getRedirect(), is("/"));
   }
 
   private FakeHttpServletRequest createRequest(Map<String, String> params) {

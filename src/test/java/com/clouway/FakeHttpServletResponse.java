@@ -35,13 +35,13 @@ public class FakeHttpServletResponse implements HttpServletResponse {
   }
 
   @Override
-  public int getStatus() {
-    return status;
+  public void setStatus(int i) {
+    status = i;
   }
 
   @Override
-  public void setStatus(int i) {
-    status = i;
+  public int getStatus() {
+    return status;
   }
 
   @Override

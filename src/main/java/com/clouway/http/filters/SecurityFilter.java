@@ -15,32 +15,41 @@ import java.io.IOException;
  * @author Martin Milev <martinmariusmilev@gmail.com>
  */
 public class SecurityFilter implements Filter {
-
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
   }
 
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
     HttpServletRequest req = (HttpServletRequest) servletRequest;
     HttpServletResponse resp = ((HttpServletResponse) servletResponse);
 
-    if (!isAuthorized(req) && !"/login".equals(req.getRequestURI())) {
-      resp.sendRedirect("login");
-      return;
+    Cookie cookie = getCookie(req);
+    String requestURI = req.getRequestURI();
+
+    if (cookie == null) {
+      if (!"/login".equals(requestURI) && !"/register".equals(requestURI)) {
+        resp.sendRedirect("login");
+        return;
+      }
+    } else {
+      if ("/login".equals(requestURI) || "/register".equals(requestURI)) {
+        resp.sendRedirect("account");
+        return;
+      }
     }
+
     filterChain.doFilter(req, resp);
   }
 
-  private boolean isAuthorized(HttpServletRequest req) {
+  private Cookie getCookie(HttpServletRequest req) {
     Cookie[] cookies = req.getCookies();
     for (Cookie c : cookies) {
       if (c.getName().equals("SID")) {
-        return true;
+        return c;
       }
     }
-    return false;
+    return null;
   }
 
   @Override

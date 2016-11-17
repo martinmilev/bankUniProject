@@ -24,12 +24,14 @@ class HtmlServletPageRenderer implements ServletPageRenderer {
       }
       renderTemplate(response, template.evaluate());
     } catch (IOException e) {
-      throw new IllegalStateException("Could not write response to the outputstream of servlet", e);
+      throw new IllegalStateException(
+              "Could not write response to the outputstream of servlet", e);
     }
   }
 
   private String loadTemplate(String pageName) throws IOException {
-    return new String(ByteStreams.toByteArray(HtmlServletPageRenderer.class.getResourceAsStream(pageName)));
+    return new String(ByteStreams.toByteArray(
+            HtmlServletPageRenderer.class.getResourceAsStream(pageName)));
   }
 
   private void renderTemplate(HttpServletResponse response, String htmlContent) throws IOException {
