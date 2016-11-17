@@ -37,6 +37,12 @@ public class PersistentSessionRepository implements SessionsRepository {
   }
 
   @Override
+  public List<Session> getAll() {
+    String query = "select * from sessions";
+    return getSession(query);
+  }
+
+  @Override
   public Integer countSessions() {
     String query = "select count(distinct Name) from sessions";
     return dataStore.fetchRows(query, resultSet -> {
@@ -47,6 +53,12 @@ public class PersistentSessionRepository implements SessionsRepository {
       }
       return 0;
     }).get(0);
+  }
+
+  @Override
+  public void deleteByID(String id) {
+    String query = "delete from sessions where ID=?";
+    dataStore.update(query, id);
   }
 
   private List<Session> getSession(String query) {

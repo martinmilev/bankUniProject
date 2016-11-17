@@ -1,5 +1,6 @@
 package com.clouway.core;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,4 +30,8 @@ public interface SessionsRepository {
    * @return the count of the sessions in Integer
    */
   Integer countSessions();
+
+  List<Session> getAll();
+
+  void deleteByID(String id);
 }
