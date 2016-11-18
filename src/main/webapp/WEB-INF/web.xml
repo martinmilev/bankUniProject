@@ -56,7 +56,7 @@
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>TransactionPageServlet</servlet-name>
+    <servlet-name>transactionPageServlet</servlet-name>
     <url-pattern>/transaction</url-pattern>
   </servlet-mapping>
 
