@@ -27,7 +27,7 @@ public class SecurityFilter implements Filter {
     Cookie cookie = getCookie(req);
     String requestURI = req.getRequestURI();
 
-    if (cookie == null) {
+    if (cookie == null || cookie.getValue() == null) {
       if (!"/login".equals(requestURI) && !"/register".equals(requestURI)) {
         resp.sendRedirect("login");
         return;

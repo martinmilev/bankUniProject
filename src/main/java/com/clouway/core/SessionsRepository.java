@@ -32,6 +32,7 @@ public interface SessionsRepository {
   Integer countSessions();
 
   /**
+<<<<<<< fa1b7278e8609d2323d9e5d5d644da0f60f6aa6b
    * Get all the sessions from the DB.
    *
    * @return List of the Sessions

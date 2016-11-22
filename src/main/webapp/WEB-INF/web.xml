@@ -40,6 +40,11 @@
     <servlet-class>com.clouway.http.servlets.TransactionHistoryPageServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>logoutServlet</servlet-name>
+    <servlet-class>com.clouway.http.servlets.LogoutServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>registrationPageServlet</servlet-name>
     <url-pattern>/register</url-pattern>
@@ -63,6 +68,11 @@
   <servlet-mapping>
     <servlet-name>transactionHistoryPageServlet</servlet-name>
     <url-pattern>/history</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>logoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
