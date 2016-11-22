@@ -64,7 +64,6 @@ public class PersistentSessionRepositoryTest {
             new Session("id2", "userB", date)
     );
 
-    assertThat(actual.size(), is(2));
     assertThat(actual, is(expected));
   }
 

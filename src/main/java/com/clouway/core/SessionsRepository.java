@@ -31,7 +31,17 @@ public interface SessionsRepository {
    */
   Integer countSessions();
 
+  /**
+   * Get all the sessions from the DB.
+   *
+   * @return List of the Sessions
+   */
   List<Session> getAll();
 
+  /**
+   * Deleting session from the database by sessions id.
+   *
+   * @param id
+   */
   void deleteByID(String id);
 }

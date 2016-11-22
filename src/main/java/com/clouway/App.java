@@ -14,14 +14,21 @@ import com.google.common.base.Strings;
 public class App {
   public static void main(String[] args) {
 
-    Thread cleaner = new Thread(
-            new SessionsCleaner(
-                    5,
-                    new PersistentSessionRepository(new DataStore(new ConnectionProvider())),
-                    new MyServerClock())
-    );
+    new Thread() {
+      private SessionsCleaner cleaner = new SessionsCleaner
+              (new PersistentSessionRepository(new DataStore(new ConnectionProvider())), new MyServerClock());
 
-    cleaner.start();
+      @Override
+      public void run() {
+        try {
+          while (true) {
+            cleaner.cleanSessions();
+            Thread.sleep(10000L);
+          }
+        } catch (InterruptedException e) {
+        }
+      }
+    }.start();
 
     // User default database when no configuration is specified
     if (Strings.isNullOrEmpty(System.getenv("BANK_DB_HOST"))) {
