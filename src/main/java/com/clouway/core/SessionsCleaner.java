@@ -1,5 +1,6 @@
 package com.clouway.core;
 
+import com.google.inject.Inject;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ public class SessionsCleaner {
   private final MyClock clock;
   private final Integer sessionLife = 5;
 
+  @Inject
   public SessionsCleaner(SessionsRepository sessionsRepo, MyClock clock) {
     this.sessionsRepo = sessionsRepo;
     this.clock = clock;

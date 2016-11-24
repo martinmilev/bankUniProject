@@ -6,98 +6,13 @@
 <web-app>
 
   <filter>
-    <filter-name>SecurityFilter</filter-name>
-    <filter-class>com.clouway.http.filters.SecurityFilter</filter-class>
+    <filter-name>guiceFilter</filter-name>
+    <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
   </filter>
 
   <filter-mapping>
-    <filter-name>SecurityFilter</filter-name>
+    <filter-name>guiceFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-
-  <servlet>
-    <servlet-name>registrationPageServlet</servlet-name>
-    <servlet-class>com.clouway.http.servlets.RegistrationPageServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>loginPageServlet</servlet-name>
-    <servlet-class>com.clouway.http.servlets.LoginPageServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>accountPageServlet</servlet-name>
-    <servlet-class>com.clouway.http.servlets.AccountPageServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>transactionPageServlet</servlet-name>
-    <servlet-class>com.clouway.http.servlets.TransactionPageServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>transactionHistoryPageServlet</servlet-name>
-    <servlet-class>com.clouway.http.servlets.TransactionHistoryPageServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>logoutServlet</servlet-name>
-    <servlet-class>com.clouway.http.servlets.LogoutServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>registrationPageServlet</servlet-name>
-    <url-pattern>/register</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>loginPageServlet</servlet-name>
-    <url-pattern>/login</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>accountPageServlet</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>transactionPageServlet</servlet-name>
-    <url-pattern>/transaction</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>transactionHistoryPageServlet</servlet-name>
-    <url-pattern>/history</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>logoutServlet</servlet-name>
-    <url-pattern>/logout</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>*.html</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>*.jpg</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>*.png</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>*.css</url-pattern>
-  </servlet-mapping>
-
-  <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>*.js</url-pattern>
-  </servlet-mapping>
 
 </web-app>

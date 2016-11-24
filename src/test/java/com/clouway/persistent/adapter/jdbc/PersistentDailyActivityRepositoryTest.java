@@ -6,7 +6,6 @@ import com.clouway.persistent.datastore.DataStore;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -26,7 +25,7 @@ public class PersistentDailyActivityRepositoryTest {
 
   @Before
   public void setUp() throws Exception {
-    Connection connection = provider.get();
+    java.sql.Connection connection = provider.get();
     try {
       Statement statement = connection.createStatement();
       statement.executeUpdate("TRUNCATE TABLE transaction_history;");
@@ -67,7 +66,7 @@ public class PersistentDailyActivityRepositoryTest {
   }
 
   private void addHistory(Transaction transaction, Integer capacity) throws SQLException {
-    Connection connection = provider.get();
+    java.sql.Connection connection = provider.get();
     Statement statement = connection.createStatement();
     for (int i = 0; i < capacity; i++) {
       statement.executeUpdate("insert into transaction_history(Date,Name,Operation,Amount) values('" + transaction.operationDate + "','" + transaction.customerName + "','" + transaction.operationType + "'," + transaction.amount + ");");

@@ -3,20 +3,18 @@ package com.clouway.persistent.adapter.jdbc;
 import com.clouway.core.HistoryRepository;
 import com.clouway.core.Transaction;
 import com.clouway.persistent.datastore.DataStore;
+import com.google.inject.Inject;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Borislav Gadjev <gadjevb@gmail.com>
  */
 public class PersistentHistoryRepository implements HistoryRepository {
-  private DataStore dataStore;
+  private final DataStore dataStore;
 
+  @Inject
   public PersistentHistoryRepository(DataStore dataStore) {
     this.dataStore = dataStore;
   }

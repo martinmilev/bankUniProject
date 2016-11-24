@@ -1,7 +1,6 @@
 package com.clouway.http.server;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
@@ -21,6 +20,7 @@ public class JettyServer {
     context.setResourceBase("src/main/webapp");
     context.setWar("src/main/webapp");
     context.setContextPath("/");
+    context.addEventListener(new MyGuiceServletConfig());
     context.setParentLoaderPriority(true);
     server.setHandler(context);
     try {

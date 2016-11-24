@@ -6,6 +6,7 @@ import com.clouway.core.AccountRepository;
 import com.clouway.persistent.datastore.DataStore;
 import com.clouway.persistent.datastore.RowFetcher;
 import com.clouway.persistent.datastore.TransactionCall;
+import com.google.inject.Inject;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class PersistentAccountRepository implements AccountRepository {
   private final DataStore dataStore;
 
+  @Inject
   public PersistentAccountRepository(DataStore dataStore) {
     this.dataStore = dataStore;
   }

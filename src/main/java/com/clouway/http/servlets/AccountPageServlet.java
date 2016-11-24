@@ -1,13 +1,13 @@
 package com.clouway.http.servlets;
 
-import com.clouway.core.*;
-import com.clouway.persistent.adapter.jdbc.ConnectionProvider;
-import com.clouway.persistent.adapter.jdbc.PersistentAccountRepository;
-import com.clouway.persistent.adapter.jdbc.PersistentDailyActivityRepository;
-import com.clouway.persistent.adapter.jdbc.PersistentSessionRepository;
-import com.clouway.persistent.datastore.DataStore;
-import com.google.common.annotations.VisibleForTesting;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import com.clouway.core.Account;
+import com.clouway.core.AccountRepository;
+import com.clouway.core.DailyActivityRepository;
+import com.clouway.core.ServletPageRenderer;
+import com.clouway.core.Session;
+import com.clouway.core.SessionsRepository;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -21,24 +21,14 @@ import java.util.Map;
 /**
  * @author Martin Milev <martinmariusmilev@gmail.com>
  */
+@Singleton
 public class AccountPageServlet extends HttpServlet {
   private final ServletPageRenderer servletResponseWriter;
   private final AccountRepository repository;
   private final DailyActivityRepository activityRepository;
   private final SessionsRepository sessions;
 
-  @Ignore
-  @SuppressWarnings("unused")
-  public AccountPageServlet() {
-    this(
-            new PersistentAccountRepository(new DataStore(new ConnectionProvider())),
-            new PersistentDailyActivityRepository(new DataStore(new ConnectionProvider())),
-            new PersistentSessionRepository(new DataStore(new ConnectionProvider())),
-            new HtmlServletPageRenderer()
-    );
-  }
-
-  @VisibleForTesting
+  @Inject
   public AccountPageServlet(AccountRepository repository, DailyActivityRepository activityRepository, SessionsRepository sessions, ServletPageRenderer servletResponseWriter) {
     this.servletResponseWriter = servletResponseWriter;
     this.repository = repository;

@@ -4,6 +4,7 @@ import com.clouway.core.Session;
 import com.clouway.core.SessionsRepository;
 import com.clouway.persistent.datastore.DataStore;
 import com.clouway.persistent.datastore.RowFetcher;
+import com.google.inject.Inject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class PersistentSessionRepository implements SessionsRepository {
   private final DataStore dataStore;
 
+  @Inject
   public PersistentSessionRepository(DataStore dataStore) {
     this.dataStore = dataStore;
   }

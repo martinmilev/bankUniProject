@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * @author Martin Milev <martinmariusmilev@gmail.com>
  */
-public class UuidGenerator implements Provider<String> {
+public class UuidProvider implements Provider<String> {
 
   @Override
   public String get() {

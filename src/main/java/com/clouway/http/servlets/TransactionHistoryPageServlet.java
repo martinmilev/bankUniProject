@@ -1,12 +1,12 @@
 package com.clouway.http.servlets;
 
-import com.clouway.core.*;
-import com.clouway.persistent.adapter.jdbc.ConnectionProvider;
-import com.clouway.persistent.adapter.jdbc.PersistentHistoryRepository;
-import com.clouway.persistent.adapter.jdbc.PersistentSessionRepository;
-import com.clouway.persistent.datastore.DataStore;
-import com.google.common.annotations.VisibleForTesting;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import com.clouway.core.HistoryRepository;
+import com.clouway.core.ServletPageRenderer;
+import com.clouway.core.Session;
+import com.clouway.core.SessionsRepository;
+import com.clouway.core.Transaction;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -19,25 +19,17 @@ import java.util.Map;
 /**
  * @author Borislav Gadjev <gadjevb@gmail.com>
  */
+@Singleton
 public class TransactionHistoryPageServlet extends HttpServlet {
     private final Integer limit = 20;
-    private Integer offset = 0;
-    private Boolean nextButton = true;
-    private Boolean backButton = false;
-    private HistoryRepository historyRepository;
-    private ServletPageRenderer renderer;
+    private final HistoryRepository historyRepository;
+    private final ServletPageRenderer renderer;
     private final SessionsRepository sessions;
+    private Boolean backButton = false;
+    private Boolean nextButton = true;
+    private Integer offset = 0;
 
-    @Ignore
-    public TransactionHistoryPageServlet() {
-        this(
-                new PersistentHistoryRepository(new DataStore(new ConnectionProvider())),
-                new PersistentSessionRepository(new DataStore(new ConnectionProvider())),
-                new HtmlServletPageRenderer()
-        );
-    }
-
-    @VisibleForTesting
+    @Inject
     public TransactionHistoryPageServlet(HistoryRepository historyRepository, SessionsRepository sessions, ServletPageRenderer renderer) {
         this.historyRepository = historyRepository;
         this.sessions =sessions;

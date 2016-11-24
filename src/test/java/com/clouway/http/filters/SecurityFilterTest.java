@@ -53,7 +53,7 @@ public class SecurityFilterTest {
 
     filter.doFilter(request, response, chain);
 
-    assertThat(response.getRedirect(), is("account"));
+    assertThat(response.getRedirect(), is("/account"));
   }
 
   @Test

@@ -1,5 +1,7 @@
 package com.clouway.http.filters;
 
+import com.google.inject.Singleton;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -14,6 +16,7 @@ import java.io.IOException;
 /**
  * @author Martin Milev <martinmariusmilev@gmail.com>
  */
+@Singleton
 public class SecurityFilter implements Filter {
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
@@ -33,8 +36,9 @@ public class SecurityFilter implements Filter {
         return;
       }
     } else {
-      if ("/login".equals(requestURI) || "/register".equals(requestURI)) {
-        resp.sendRedirect("account");
+      if (!"/account".equals(requestURI) && !"/transaction".equals(requestURI) &&
+              !"/history".equals(requestURI) && !"/logout".equals(requestURI)) {
+        resp.sendRedirect("/account");
         return;
       }
     }

@@ -6,6 +6,7 @@ import com.clouway.persistent.adapter.jdbc.ConnectionProvider;
 import com.clouway.persistent.adapter.jdbc.PersistentSessionRepository;
 import com.clouway.persistent.datastore.DataStore;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.inject.Singleton;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,7 @@ import java.util.Optional;
 /**
  * @author Martin Milev <martinmariusmilev@gmail.com>
  */
+@Singleton
 public class LogoutServlet extends HttpServlet {
   private SessionsRepository sessions;
 

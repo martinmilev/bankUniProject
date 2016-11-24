@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * @author Miroslav Genov (miroslav.genov@clouway.com)
  */
-class HtmlServletPageRenderer implements ServletPageRenderer {
+public class HtmlServletPageRenderer implements ServletPageRenderer {
 
   @Override
   public void renderPage(String pageName, Map<String, Object> params, HttpServletResponse response) throws IOException {

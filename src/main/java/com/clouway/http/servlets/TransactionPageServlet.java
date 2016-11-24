@@ -1,12 +1,12 @@
 package com.clouway.http.servlets;
 
-import com.clouway.core.*;
-import com.clouway.persistent.adapter.jdbc.ConnectionProvider;
-import com.clouway.persistent.adapter.jdbc.PersistentAccountRepository;
-import com.clouway.persistent.adapter.jdbc.PersistentSessionRepository;
-import com.clouway.persistent.datastore.DataStore;
-import com.google.common.annotations.VisibleForTesting;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import com.clouway.core.Account;
+import com.clouway.core.AccountRepository;
+import com.clouway.core.ServletPageRenderer;
+import com.clouway.core.Session;
+import com.clouway.core.SessionsRepository;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -21,22 +21,13 @@ import java.util.Optional;
 /**
  * @author Borislav Gadjev <gadjevb@gmail.com>
  */
+@Singleton
 public class TransactionPageServlet extends HttpServlet {
   private final AccountRepository repository;
   private final ServletPageRenderer servletResponseWriter;
   private final SessionsRepository sessions;
 
-  @Ignore
-  @SuppressWarnings("unused")
-  public TransactionPageServlet() {
-    this(
-            new PersistentAccountRepository(new DataStore(new ConnectionProvider())),
-            new PersistentSessionRepository(new DataStore(new ConnectionProvider())),
-            new HtmlServletPageRenderer()
-    );
-  }
-
-  @VisibleForTesting
+  @Inject
   public TransactionPageServlet(AccountRepository repository, SessionsRepository sessions, ServletPageRenderer servletResponseWriter) {
     this.repository = repository;
     this.servletResponseWriter = servletResponseWriter;

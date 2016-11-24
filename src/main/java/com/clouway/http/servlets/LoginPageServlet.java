@@ -1,12 +1,9 @@
 package com.clouway.http.servlets;
 
 import com.clouway.core.*;
-import com.clouway.persistent.adapter.jdbc.ConnectionProvider;
-import com.clouway.persistent.adapter.jdbc.PersistentAccountRepository;
-import com.clouway.persistent.adapter.jdbc.PersistentSessionRepository;
-import com.clouway.persistent.datastore.DataStore;
-import com.google.common.annotations.VisibleForTesting;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -21,31 +18,20 @@ import java.util.Optional;
 /**
  * @author Martin Milev <martinmariusmilev@gmail.com>
  */
+@Singleton
 public class LoginPageServlet extends HttpServlet {
-  private AccountRepository repository;
-  private SessionsRepository sessions;
-  private ServletPageRenderer servletResponseWriter;
-  private MyClock clock;
-  private Provider uuid;
+  private final AccountRepository repository;
+  private final SessionsRepository sessions;
+  private final ServletPageRenderer servletResponseWriter;
+  private final MyClock clock;
+  private final Provider uuid;
 
-  @Ignore
-  @SuppressWarnings("unused")
-  public LoginPageServlet() {
-    this(
-            new PersistentAccountRepository(new DataStore(new ConnectionProvider())),
-            new PersistentSessionRepository(new DataStore(new ConnectionProvider())),
-            new HtmlServletPageRenderer(),
-            new MyServerClock(),
-            new UuidGenerator()
-    );
-  }
-
-  @VisibleForTesting
+  @Inject
   public LoginPageServlet(AccountRepository repository,
                           SessionsRepository sessions,
                           ServletPageRenderer servletResponseWriter,
                           MyClock clock,
-                          Provider uuidGenerator) {
+                          @Named("UUID") Provider uuidGenerator) {
     this.repository = repository;
     this.servletResponseWriter = servletResponseWriter;
     this.sessions = sessions;

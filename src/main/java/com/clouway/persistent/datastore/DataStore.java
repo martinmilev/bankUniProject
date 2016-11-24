@@ -2,6 +2,8 @@ package com.clouway.persistent.datastore;
 
 import com.clouway.core.Provider;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -14,9 +16,10 @@ import java.util.List;
  * @author Martin Milev <martinmariusmilev@gmail.com>
  */
 public class DataStore {
-  private Provider<Connection> provider;
+  private final Provider<Connection> provider;
 
-  public DataStore(Provider<Connection> provider) {
+  @Inject
+  public DataStore(@Named("CP") Provider provider) {
     this.provider = provider;
   }
 
@@ -26,7 +29,7 @@ public class DataStore {
       fillStatement(statement, objects);
       statement.execute();
     } catch (SQLException e) {
-      throw new IllegalStateException("Connection to the database wasn't established", e);
+      throw new IllegalStateException("ConnectionProvider to the database wasn't established", e);
     } finally {
       close(connection);
     }
@@ -42,7 +45,7 @@ public class DataStore {
         list.add(row);
       }
     } catch (SQLException e) {
-      throw new IllegalStateException("Connection to the database wasn't established");
+      throw new IllegalStateException("ConnectionProvider to the database wasn't established");
     } finally {
       close(connection);
     }
@@ -86,7 +89,7 @@ public class DataStore {
         connection.setAutoCommit(true);
         close(connection);
       } catch (SQLException e) {
-        throw new IllegalStateException("Connection cannot be moved to it's original state.", e);
+        throw new IllegalStateException("ConnectionProvider cannot be moved to it's original state.", e);
       }
     }
   }
@@ -100,7 +103,7 @@ public class DataStore {
         decimal = BigDecimal.valueOf(set.getDouble(1));
       }
     } catch (SQLException e) {
-      throw new IllegalStateException("Connection to the database wasn't established", e);
+      throw new IllegalStateException("ConnectionProvider to the database wasn't established", e);
     }
     return decimal;
   }
@@ -110,7 +113,7 @@ public class DataStore {
       fillStatement(statement, params);
       statement.execute();
     } catch (SQLException e) {
-      throw new IllegalStateException("Connection to the database wasn't established", e);
+      throw new IllegalStateException("ConnectionProvider to the database wasn't established", e);
     }
   }
 }

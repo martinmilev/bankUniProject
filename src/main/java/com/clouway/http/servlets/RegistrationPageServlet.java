@@ -4,11 +4,8 @@ import com.clouway.core.Account;
 import com.clouway.core.AccountRepository;
 import com.clouway.core.RegexValidator;
 import com.clouway.core.ServletPageRenderer;
-import com.clouway.persistent.adapter.jdbc.ConnectionProvider;
-import com.clouway.persistent.adapter.jdbc.PersistentAccountRepository;
-import com.clouway.persistent.datastore.DataStore;
-import com.google.common.annotations.VisibleForTesting;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,20 +17,12 @@ import java.util.Collections;
 /**
  * @author Martin Milev <martinmariusmilev@gmail.com>
  */
+@Singleton
 public class RegistrationPageServlet extends HttpServlet {
-  private AccountRepository repository;
-  private ServletPageRenderer servletResponseWriter;
+  private final AccountRepository repository;
+  private final ServletPageRenderer servletResponseWriter;
 
-  @Ignore
-  @SuppressWarnings("unused")
-  public RegistrationPageServlet() {
-    this(
-            new PersistentAccountRepository(new DataStore(new ConnectionProvider())),
-            new HtmlServletPageRenderer()
-    );
-  }
-
-  @VisibleForTesting
+  @Inject
   public RegistrationPageServlet(AccountRepository repository, ServletPageRenderer servletResponseWriter) {
     this.repository = repository;
     this.servletResponseWriter = servletResponseWriter;
