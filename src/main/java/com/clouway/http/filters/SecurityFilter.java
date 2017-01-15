@@ -36,7 +36,7 @@ public class SecurityFilter implements Filter {
         return;
       }
     } else {
-      if (!"/account".equals(requestURI) && !"/transaction".equals(requestURI) &&
+      if (!"/account".equals(requestURI) && !"/transaction".equals(requestURI) && !"/transfer".equals(requestURI) &&
               !"/history".equals(requestURI) && !"/logout".equals(requestURI)) {
         resp.sendRedirect("/account");
         return;

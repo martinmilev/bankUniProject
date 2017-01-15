@@ -70,4 +70,17 @@ public class PersistentAccountRepository implements AccountRepository {
     });
     return accounts.isEmpty() ? Optional.empty() : Optional.ofNullable(accounts.iterator().next());
   }
+
+  @Override
+  public List<Account> getAll() {
+    String query = "select * from accounts";
+    return dataStore.fetchRows(query, resultSet -> {
+      try {
+        return new Account(resultSet.getString(2), resultSet.getString(3), resultSet.getDouble(4));
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      return null;
+    });
+  }
 }

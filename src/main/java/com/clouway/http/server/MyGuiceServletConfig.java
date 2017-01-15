@@ -8,6 +8,7 @@ import com.clouway.http.servlets.LogoutServlet;
 import com.clouway.http.servlets.RegistrationPageServlet;
 import com.clouway.http.servlets.TransactionHistoryPageServlet;
 import com.clouway.http.servlets.TransactionPageServlet;
+import com.clouway.http.servlets.TransferPageServlet;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -29,6 +30,7 @@ public class MyGuiceServletConfig extends GuiceServletContextListener {
         serve("/logout").with(LogoutServlet.class);
         serve("/register").with(RegistrationPageServlet.class);
         serve("/transaction").with(TransactionPageServlet.class);
+        serve("/transfer").with(TransferPageServlet.class);
         serve("/history").with(TransactionHistoryPageServlet.class);
       }
     });

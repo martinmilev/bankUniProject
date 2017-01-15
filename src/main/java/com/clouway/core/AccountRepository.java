@@ -1,5 +1,6 @@
 package com.clouway.core;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,5 +14,7 @@ public interface AccountRepository {
   void withdraw(String name, Double balance);
 
   Optional<Account> getByName(String name);
+
+  List<Account> getAll();
 }
 

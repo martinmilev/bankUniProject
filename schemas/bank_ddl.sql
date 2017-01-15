@@ -18,6 +18,13 @@ Operation   VARCHAR(10)      NOT NULL,
 Amount      DOUBLE           NOT NULL
 );
 
+CREATE TABLE transfer_history(
+Date        TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+NameFrom    VARCHAR(50)      NOT NULL,
+NameTo      VARCHAR(50)      NOT NULL,
+Amount      DOUBLE           NOT NULL
+);
+
 DELIMITER $$
 CREATE TRIGGER transaction_history BEFORE UPDATE ON accounts
 FOR EACH ROW

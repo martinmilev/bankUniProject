@@ -36,14 +36,14 @@ public class LogoutServlet extends HttpServlet {
   }
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     for (Cookie cookie : req.getCookies()) {
       if ("SID".equals(cookie.getName())) {
         Optional<Session> possibleSession = sessions.findBySID(cookie.getValue());
           if (possibleSession.isPresent()) {
             sessions.deleteByID(possibleSession.get().id);
             cookie.setValue(null);
-            cookie.setMaxAge(-1);
+            cookie.setMaxAge(0);
           }
         }
       }

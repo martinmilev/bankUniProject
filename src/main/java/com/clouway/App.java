@@ -36,7 +36,7 @@ public class App {
       System.setProperty("BANK_DB_PASS", "123123");
       System.setProperty("BANK_DB_NAME", "myBank");
     }
-    JettyServer server = new JettyServer(8080);
+    JettyServer server = new JettyServer(8081);
     server.start();
   }
 }
