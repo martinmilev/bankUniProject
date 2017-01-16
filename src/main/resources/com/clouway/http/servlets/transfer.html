@@ -29,21 +29,12 @@
         </li>
         <li class="list-group-item">
 
-            <form class="form-horizontal" action="/transaction" method='post'>
-                <div class="form-group">
-                    <div class="checkbox col-md-8 col-md-offset-2">
-                        <div class="form-group">
-                            <label for="sel1">Select User:</label>
-                            <select class="form-control" id="sel1">
-                                ${userList}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
+            <form class="form-horizontal" action="/transfer" method='post'>
                 <div class="form-group">
                     <div>
                         <div class="input-group col-md-8 col-md-offset-2">
+                            <input class="form-control" name="recipient" type="text" pattern="[A-Za-z]{1,30}" placeholder="Name"
+                                   required>
                             <input class="form-control" name="amount" type="number" step="0.01" min="0" pattern="[0-9]"
                                    placeholder="0.00" required>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-bitcoin"></span></span>
@@ -51,6 +42,7 @@
                     </div>
                 </div>
                 <p class="text-center text-danger">${error}</p>
+                <p class="text-center text-success">${msg}</p>
 
                 <div class="form-group">
                     <label class="col-md-4 col-md-offset-1 control-label"></label>

@@ -19,6 +19,16 @@
                     class="glyphicon glyphicon-off"></span></span></a></li>
         </ul>
     </nav>
+    <form action="/history" method="post">
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <input type="submit" class="btn btn-primary" name="table" value="Transactions"/>
+            </div>
+            <div class="btn-group">
+                <input type="submit" class="btn btn-primary" name="table" value="Transfers"/>
+            </div>
+        </div>
+    </form>
     <div class="well well-sm">
         ${transactions}
     </div>

@@ -11,7 +11,7 @@ import java.util.Date;
 public class SessionsCleaner {
   private final SessionsRepository sessionsRepo;
   private final MyClock clock;
-  private final Integer sessionLife = 5;
+  private final Integer sessionLife = 30;
 
   @Inject
   public SessionsCleaner(SessionsRepository sessionsRepo, MyClock clock) {

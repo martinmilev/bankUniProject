@@ -27,7 +27,7 @@ public class PersistentTransferRepository implements TransferRepository {
 
   @Override
   public List<Transfer> getHistory(String username, int offset, int limit) {
-    String query = "select * from transfer_history where name='" + username + "' order by date limit " + offset + "," + limit + ";";
+    String query = "select * from transfer_history where NameFrom='" + username + "' OR NameTo='" + username + "' order by date limit " + offset + "," + limit + ";";
     return dataStore.fetchRows(query, set -> {
       try {
         return new Transfer(set.getTimestamp(1), set.getString(2), set.getString(3), set.getDouble(4));
