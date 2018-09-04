@@ -1,5 +1,5 @@
 # Bank
-My Personal Bank Application used for learning of new Java Related Stuff
+My Personal Bank Application used for learning Java Related Stuff
 
 ## Build Status
 [![Build Status](https://travis-ci.org/clouway-incubator/servlets.svg?branch=master)](https://travis-ci.org/clouway-incubator/servlets)
